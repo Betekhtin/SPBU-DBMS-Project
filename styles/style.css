@@ -1,0 +1,26 @@
+body {
+    background: url(../img/back.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+.fone{
+    background: rgba(221, 246, 249, 0.7);
+    padding: 30px;
+    font-weight: 400;
+    font-size: 17px;
+}
+.offset3{
+    float:none;
+    margin:  auto;
+    margin-top: 50px;
+ }
+section p{
+    font-size: 18px;
+    padding-top: 10px;
+}
+section h2{
+    padding-left: 100px;
+    padding-top: 40px;
+}
+section ul{
+    padding-left: 100px;
+}
