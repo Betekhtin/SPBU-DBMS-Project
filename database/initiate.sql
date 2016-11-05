@@ -5,29 +5,29 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema u871174038_data
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema u871174038_data
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `u871174038_data` DEFAULT CHARACTER SET utf8 ;
+USE `u871174038_data` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`country`
+-- Table `u871174038_data`.`country`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`country` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`country` (
   `country_id` INT NOT NULL,
   `country_name` VARCHAR(45) NULL,
   PRIMARY KEY (`country_id`))
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`city`
+-- Table `u871174038_data`.`city`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`city` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`city` (
   `city_id` INT NOT NULL,
   `сountry_id` INT NOT NULL,
   `city_name` VARCHAR(45) NULL,
@@ -35,16 +35,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`city` (
   INDEX `fk_city_country1_idx` (`сountry_id` ASC),
   CONSTRAINT `fk_city_country1`
     FOREIGN KEY (`сountry_id`)
-    REFERENCES `mydb`.`country` (`country_id`)
+    REFERENCES `u871174038_data`.`country` (`country_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `u871174038_data`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`user` (
   `user_id` INT NOT NULL,
   `city_id` INT NOT NULL,
   `login` VARCHAR(25) NULL,
@@ -58,16 +58,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   INDEX `fk_user_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_user_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`temperature`
+-- Table `u871174038_data`.`temperature`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`temperature` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`temperature` (
   `temperature_id` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -80,16 +80,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`temperature` (
   INDEX `fk_temperature_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_temperature_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`other_weather_data`
+-- Table `u871174038_data`.`other_weather_data`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`other_weather_data` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`other_weather_data` (
   `idother_weather_data` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -104,16 +104,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`other_weather_data` (
   INDEX `fk_other_weather_data_city2_idx` (`city_id` ASC),
   CONSTRAINT `fk_other_weather_data_city2`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`pressure`
+-- Table `u871174038_data`.`pressure`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`pressure` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`pressure` (
   `pressure_id` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -124,16 +124,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`pressure` (
   INDEX `fk_pressure_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_pressure_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`weather`
+-- Table `u871174038_data`.`weather`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`weather` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`weather` (
   `weather_id` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -144,16 +144,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`weather` (
   INDEX `fk_weather_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_weather_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`clouds`
+-- Table `u871174038_data`.`clouds`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`clouds` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`clouds` (
   `idclouds` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -167,16 +167,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`clouds` (
   INDEX `fk_clouds_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_clouds_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`wind`
+-- Table `u871174038_data`.`wind`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`wind` (
+CREATE TABLE IF NOT EXISTS `u871174038_data`.`wind` (
   `wind_id` INT NOT NULL,
   `date` TIMESTAMP(10) NULL,
   `city_id` INT NOT NULL,
@@ -188,10 +188,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`wind` (
   INDEX `fk_wind_city1_idx` (`city_id` ASC),
   CONSTRAINT `fk_wind_city1`
     FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
+    REFERENCES `u871174038_data`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = Aria;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
