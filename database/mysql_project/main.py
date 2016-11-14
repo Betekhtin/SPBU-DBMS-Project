@@ -1,4 +1,3 @@
-#сделать проверку на пустоту!!!!
 import csv
 import mysql.connector
 from mysql.connector import Error
@@ -86,8 +85,8 @@ def insert_other(conn, cursor, date, city_id, U,VV,RRR,tR,E,E_,sss):
 def main():
     conn = connect()
     cursor = conn.cursor()
-    csv_filename='/Users/Zharkov/Downloads/daty.csv'
-    city_id=''
+    csv_filename = '/Users/Zharkov/SPBU-DBMS-Project/database/csv-data/russia_spb.csv'
+    city_id='1'
     with open(csv_filename, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=';', quotechar='"')
         for row in spamreader:
@@ -124,12 +123,12 @@ def main():
             date = row.pop()
             tmp = date.split(' ')
             date = ('-'.join(tmp[0].split('.')[::-1])) + ' ' + tmp[1] + ':00'
-            if (T!= Tn != Tx != Td != Tg != '') : insert_temperature(conn,cursor,date, city_id, T, Tn, Tx, Td, Tg)
-            if (WW != W1 != W2 != '') : insert_weather(conn, cursor, date, city_id, WW, W1, W2)
-            if ( N != Cl != Nh != H != Cm != Ch != ''): insert_clouds(conn, cursor, date, city_id, N, Cl, Nh, H, Cm, Ch)
-            if (P0 != P != Pa != '') :  insert_pressure(conn, cursor, date, city_id, P0, P, Pa)
-            if (DD != Ff != ff10 != ff3 != '') : insert_wind(conn, cursor, date, city_id, DD, Ff, ff10, ff3)
-            if ( U != VV != RRR != tR != E != E_ != sss != '') : insert_other(conn, cursor, date, city_id, U, VV, RRR, tR, E, E_, sss)
+            if not(T== Tn == Tx == Td == Tg == "") : insert_temperature(conn,cursor,date, city_id, T, Tn, Tx, Td, Tg)
+            if not(WW == W1 == W2 == "") : insert_weather(conn, cursor, date, city_id, WW, W1, W2)
+            if not( N == Cl == Nh == H == Cm == Ch == ""): insert_clouds(conn, cursor, date, city_id, N, Cl, Nh, H, Cm, Ch)
+            if not(P0 == P == Pa == "") :  insert_pressure(conn, cursor, date, city_id, P0, P, Pa)
+            if not(DD == Ff == ff10 == ff3 == "") : insert_wind(conn, cursor, date, city_id, DD, Ff, ff10, ff3)
+            if not( U == VV == RRR == tR == E == E_ == sss == "") : insert_other(conn, cursor, date, city_id, U, VV, RRR, tR, E, E_, sss)
     cursor.close()
     conn.close()
 if __name__ == '__main__':
