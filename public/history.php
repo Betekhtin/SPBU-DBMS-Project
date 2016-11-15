@@ -1,4 +1,11 @@
+<?
+  ini_set ("session.use_trans_sid", true);
+  session_start();
+  include ('../lib/connect.php');
+?>
+
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -50,10 +57,13 @@
                     <div class="col-md-4">
                         <select id="country" name="country" class="form-control">
                           <option value=""></option>
-                          <option value="Russia">Russia</option>
-                          <option value="USA">United States</option>
-                          <option value="China">China</option>
-                </select>
+                          <?
+                          $tmp=mysql_query("SELECT * FROM country");
+                          while ($country_options = mysql_fetch_array($tmp, MYSQL_ASSOC)){
+                            printf("<option value=\"%s\">%s</option>", $country_options["country_id"], $country_options["country_name"]);
+                          }
+                          ?>
+                        </select>
                     </div>
                 </div>
 
@@ -64,7 +74,19 @@
                           <option value=""></option>
                           <option value="Moscow">Moscow</option>
                           <option value="Saint-Petersburg">Saint-Petersburg</option>
-                </select>
+                          <script>
+                          var country = $('#country');
+                          country.addEventListener('change', function(){
+                            var selected_id = country.value;
+                            <?
+                            $tmp=mysql_query("SELECT * FROM city where city.country_id= \"\"");
+                            while ($country_options = mysql_fetch_array($tmp, MYSQL_ASSOC)){
+                              printf("<option value=\"%s\">%s</option>", $country_options["country_id"], $country_options["country_name"]);
+                            }
+                            ?>
+                          })
+                          </script>
+                        </select>
                     </div>
                 </div>
 
