@@ -43,7 +43,7 @@ require_once 'classes/Auth.class.php';
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="history.php">History</a></li>
                     <li><a href="forecast.html">Forecast</a></li>
-                    <li><a href="about.about">About</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
                 <!-- Right navbar -->
                 <ul class="nav navbar-nav navbar-right">
