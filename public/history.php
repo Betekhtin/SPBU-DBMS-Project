@@ -1,5 +1,5 @@
 <?php
-
+include 'getdata.php';
 if (!empty($_COOKIE['sid'])) {
     // check session id in cookies
     session_id($_COOKIE['sid']);
@@ -67,11 +67,27 @@ require_once 'classes/Auth.class.php';
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="country">Country</label>
                     <div class="col-md-4">
+                       <?php
+                       
+                        $json=json_php("country");
+                      
+//                       foreach ($json as $key => $value) {
+//                // $arr[3] будет перезаписываться значениями $arr при каждой итерации цикла
+//                    echo "{$key} => {$value} ";
+//                        print_r($json);
+//                    
+                      //      }
+                       
+                        ?>
+                        <script type="text/javascript">
+                            
+                            var countries = JSON.parse('<?php echo json_encode(json_php("country")) ?>');
+                            var cities = JSON.parse('<?php echo json_encode(json_php("city")) ?>');     
+                            console.log(cities);
+                        </script>
                         <select id="country" name="country" class="form-control">
                           <option value=""></option>
-                          <option value="Russia">Russia</option>
-                          <option value="USA">United States</option>
-                          <option value="China">China</option>
+                         
                         </select>
                     </div>
                 </div>
