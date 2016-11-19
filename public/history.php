@@ -17,6 +17,8 @@ require_once 'classes/Auth.class.php';
     <title>Weather history | The weather service</title>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +27,7 @@ require_once 'classes/Auth.class.php';
       <?php if (Auth\User::isAuthorized()): ?>
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
- 
+
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,44 +63,26 @@ require_once 'classes/Auth.class.php';
     </nav>
     <main class="center-block">
 
-        <form class="form-horizontal" action="history.php">
+        <form class="form-horizontal" action="historyQuery.php">
             <fieldset>
                 <legend>Weather history</legend>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="country">Country</label>
                     <div class="col-md-4">
-                       <?php
-                       
-                        $json=json_php("country");
-                      
-//                       foreach ($json as $key => $value) {
-//                // $arr[3] будет перезаписываться значениями $arr при каждой итерации цикла
-//                    echo "{$key} => {$value} ";
-//                        print_r($json);
-//                    
-                      //      }
-                       
-                        ?>
-                        <script type="text/javascript">
-                            
-                            var countries = JSON.parse('<?php echo json_encode(json_php("country")) ?>');
-                            var cities = JSON.parse('<?php echo json_encode(json_php("city")) ?>');     
-                            console.log(cities);
-                        </script>
+
                         <select id="country" name="country" class="form-control">
-                          <option value=""></option>
-                         
+                          <option disabled selected value> ----------- </option>
+
                         </select>
+
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="city">City</label>
                     <div class="col-md-4">
-                        <select id="city" name="city" class="form-control">
-                          <option value=""></option>
-                          <option value="Moscow">Moscow</option>
-                          <option value="Saint-Petersburg">Saint-Petersburg</option>
+                        <select id="city" name="city" class="form-control" disabled>
+                          <option disabled selected value> ----------- </option>
                         </select>
                     </div>
                 </div>
@@ -127,7 +111,7 @@ require_once 'classes/Auth.class.php';
             </fieldset>
         </form>
     <?php else: ?>
-<link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
       <form class="form-signin ajax" method="post" action="./ajax.php">
            <fieldset>
@@ -173,11 +157,36 @@ require_once 'classes/Auth.class.php';
       <?php endif; ?>
 
     </div> <!-- /container -->
-
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="./js/ajax-form.js"></script>
+    <script type="text/javascript">
 
+        var countries = JSON.parse('<?php echo json_encode(json_php("country")) ?>').country;
+        var cities = JSON.parse('<?php echo json_encode(json_php("city")) ?>').city;
+
+        var countryEl = $("#country");
+        for (var i = 0; i < countries.length; ++i){
+          countryEl.append($("<option></option>")
+                   .attr("value", countries[i].country_id)
+                   .text(countries[i].country_name));
+        }
+
+        var cityEl = $("#city");
+        countryEl.change(function(){
+          cityEl.children().each(function() {
+            if (!$(this).attr("disabled")) this.remove();
+          });
+          cityEl.val("");
+          cities.forEach(function(city) {
+            if (city.country_id == countryEl.val()){
+              console.log(city);
+              cityEl.append($("<option></option>")
+                    .attr("value", city.city_id)
+                    .text(city.city_name));
+            }
+            cityEl.removeAttr("disabled");
+          });
+        });
+
+    </script>
   </body>
 </html>
