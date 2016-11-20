@@ -8,7 +8,7 @@ def connect():
                                        database='mydb',
                                        user='root',
                                        password='root',
-                                       port='8889',
+                                       #port='8889',
                                        # Charset = 'utf8'
                                        )
         if conn.is_connected():

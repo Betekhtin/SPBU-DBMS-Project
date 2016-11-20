@@ -25,6 +25,7 @@ require_once 'classes/Auth.class.php';
          <div class="container">
 
       <?php if (Auth\User::isAuthorized()): ?>
+           
          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
@@ -61,6 +62,38 @@ require_once 'classes/Auth.class.php';
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <?php if ($_POST) {  
+       $country = $_POST['country'];
+       $city = $_POST['city'];
+      $date_from = $_POST['date_from'];
+      $date_to = $_POST['date_to'];
+      $query= 'select * from temperature where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')';
+       $temperature=ms_q($query,'temperature');
+       //------------
+      $query= 'select * from weather where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')'; 
+       $weather=ms_q($query,'weather');
+        //------------
+       $query= 'select * from wind where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')';
+       $wind=ms_q($query,'wind');
+        //------------
+       $query= 'select * from pressure where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')';
+       $pressure=ms_q($query,'pressure');
+        //------------
+       $query= 'select * from other_weather_data where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')';
+       $other_weather_data=ms_q($query,'other_weather_data');
+       //------------
+       $query= 'select * from clouds where (date >= \''.$date_from.'\' and date <= \''.$date_to.' 23:00:00\') and (city_id='.$city.')';
+       $clouds=ms_q($query,'clouds');
+       //-------все почти готово к работе
+//       foreach ($temperature as $key => $value) {
+//   
+//      echo "{$key} => {$value} ";
+//       print_r($temperature);
+//}
+//       echo $temperature['temperature'][15]['date'];
+//        
+      // echo count($temperature['temperature']);
+        ?>
     <main>
       <div id="hint" class="normal"></div>
       <table class="table table-striped table-bordered table-hover">
@@ -96,11 +129,53 @@ require_once 'classes/Auth.class.php';
           <td id="t_archive_sss" class="cl_hd" onmouseover="tooltip( this , 'Высота снежного покрова (см)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )"><div class="brdDateLightArc">sss</div></td>
         </tr>
         <tbody>
+        <?php 
+       for ($i=0; $i<count($temperature['temperature']); $i++)
+       {
+           echo '<tr>';
+           //$tmp=[];
+           $str=$temperature['temperature'][$i]['date'];
+           $tmp=explode(" ", $str);
+           echo '<td>'.$tmp[0].'</td>';
+           echo '<td>'.$tmp[1].'</td>';
+           echo '<td>'.$temperature['temperature'][$i]['T'].'</td>';
+           echo '<td>'.$pressure['pressure'][$i]['P0'].'</td>';
+           echo '<td>'.$pressure['pressure'][$i]['P'].'</td>';
+           echo '<td>'.$pressure['pressure'][$i]['Pa'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['U'].'</td>';
+           echo '<td>'.$wind['wind'][$i]['DD'].'</td>';
+           echo '<td>'.$wind['wind'][$i]['Ff'].'</td>';
+           echo '<td>'.$wind['wind'][$i]['ff10'].'</td>';
+           echo '<td>'.$wind['wind'][$i]['ff3'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['N'].'</td>';
+           echo '<td>'.$weather['weather'][$i]['WW'].'</td>';
+           echo '<td>'.$weather['weather'][$i]['W1'].'</td>';
+           echo '<td>'.$weather['weather'][$i]['W2'].'</td>';
+           echo '<td>'.$temperature['temperature'][$i]['Tn'].'</td>';
+           echo '<td>'.$temperature['temperature'][$i]['Tx'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['Cl'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['Nh'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['H'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['Cm'].'</td>';
+           echo '<td>'.$clouds['clouds'][$i]['Ch'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['VV'].'</td>';
+           echo '<td>'.$temperature['temperature'][$i]['Td'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['RRR'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['Tr'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['E'].'</td>';
+           echo '<td>'.$temperature['temperature'][$i]['Tg'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['E_'].'</td>';
+           echo '<td>'.$other_weather_data['other_weather_data'][$i]['sss'].'</td>';
+           echo '</tr>' ;    
+       }
+        ?>
           <tr></tr>
         </tbody>
       </table>
 
     </main>
+    <?php } ?>
+    
     <?php else: ?>
     <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">

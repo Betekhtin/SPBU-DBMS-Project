@@ -63,7 +63,7 @@ require_once 'classes/Auth.class.php';
     </nav>
     <main class="center-block">
 
-        <form class="form-horizontal" action="historyQuery.php">
+        <form class="form-horizontal" action="historyQuery.php" method="post">
             <fieldset>
                 <legend>Weather history</legend>
                 <div class="form-group">
@@ -97,7 +97,7 @@ require_once 'classes/Auth.class.php';
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="date_to">To</label>
                     <div class="col-md-4">
-                        <input type="date" id="date_from" name="date_from" class="form-control" required></input>
+                        <input type="date" id="date_to" name="date_to" class="form-control" required></input>
                     </div>
                 </div>
 
@@ -177,8 +177,9 @@ require_once 'classes/Auth.class.php';
           });
           cityEl.val("");
           cities.forEach(function(city) {
+             
             if (city.country_id == countryEl.val()){
-              console.log(city);
+              
               cityEl.append($("<option></option>")
                     .attr("value", city.city_id)
                     .text(city.city_name));

@@ -29,12 +29,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`city` (
   `city_id` INT NOT NULL AUTO_INCREMENT,
-  `сountry_id` INT NOT NULL,
+  `country_id` INT NOT NULL,
   `city_name` VARCHAR(45) NULL,
   PRIMARY KEY (`city_id`),
-  INDEX `fk_city_country1_idx` (`сountry_id` ASC),
+  INDEX `fk_city_country1_idx` (`country_id` ASC),
   CONSTRAINT `fk_city_country1`
-    FOREIGN KEY (`сountry_id`)
+    FOREIGN KEY (`country_id`)
     REFERENCES `mydb`.`country` (`country_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`other_weather_data` (
   `RRR` VARCHAR(45) NULL,
   `tR` INT NULL,
   `E` VARCHAR(45) NULL,
-  `E'` VARCHAR(45) NULL,
+  `E_` VARCHAR(45) NULL,
   `sss` VARCHAR(45) NULL,
   PRIMARY KEY (`city_id`, `date`),
   INDEX `fk_other_weather_data_city2_idx` (`city_id` ASC),
