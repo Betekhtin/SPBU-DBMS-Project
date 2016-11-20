@@ -42,20 +42,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `mydb`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `city_id` INT NOT NULL,
-  `login` VARCHAR(25) NULL,
-  `password` VARCHAR(64) NULL,
-  `salt` VARCHAR(16) NULL,
-  `mail_reg` VARCHAR(50) NULL,
-  `mail` VARCHAR(50) NULL,
-  `last_act` TIMESTAMP(6) NULL,
-  `reg_date` VARCHAR(14) NULL,
+  `username` VARCHAR(25) NOT NULL,
+  `password` VARCHAR(64) NOT NULL,
+  `salt` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`user_id`, `city_id`),
   INDEX `fk_user_city1_idx` (`city_id` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   CONSTRAINT `fk_user_city1`
     FOREIGN KEY (`city_id`)
     REFERENCES `mydb`.`city` (`city_id`)
