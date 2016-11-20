@@ -45,19 +45,12 @@ ENGINE = InnoDB;
 -- Table `mydb`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
-  `user_id` INT NOT NULL AUTO_INCREMENT,
-  `city_id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(25) NOT NULL,
   `password` VARCHAR(64) NOT NULL,
   `salt` VARCHAR(16) NOT NULL,
-  PRIMARY KEY (`user_id`, `city_id`),
-  INDEX `fk_user_city1_idx` (`city_id` ASC),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  CONSTRAINT `fk_user_city1`
-    FOREIGN KEY (`city_id`)
-    REFERENCES `mydb`.`city` (`city_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
 
