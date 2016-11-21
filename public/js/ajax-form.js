@@ -23,7 +23,7 @@
         },
 
         callbacks: {
-            login: function ($form, data) {
+            login: function($form, data) {
                 if (data.status === 'ok') {
                     if (data.data && data.data.redirect) {
                         window.location.href = data.data.redirect;
@@ -31,7 +31,7 @@
                 }
             },
 
-            logout: function ($form, data) {
+            logout: function($form, data) {
                 if (data.status === 'ok') {
                     if (data.data && data.data.redirect) {
                         window.location.href = data.data.redirect;
@@ -39,7 +39,7 @@
                 }
             },
 
-            register: function ($form, data) {
+            register: function($form, data) {
                 if (data.status === 'ok') {
                     if (data.data && data.data.redirect) {
                         window.location.href = data.data.redirect;
@@ -199,42 +199,43 @@
     }
 
     function tr(params, lang) {
-            var messages = {}, translated = '',
-                code;
+        var messages = {},
+            translated = '',
+            code;
 
-            messages.ru_RU = {
-                'error': {
-                    'form-submit': 'Произошла ошибка при отправке формы',
-                    'ajax-request': 'Произошла ошибка при отправке запроса'
-                },
+        messages.ru_RU = {
+            'error': {
+                'form-submit': 'Произошла ошибка при отправке формы',
+                'ajax-request': 'Произошла ошибка при отправке запроса'
+            },
 
-                'notice': {
-                    'confirm': 'Подтвердите действие'
+            'notice': {
+                'confirm': 'Подтвердите действие'
+            }
+        };
+        lang = lang || 'ru_RU';
+        params = params.toLowerCase().split(':');
+        if (messages[lang] !== undefined && params.length) {
+            for (var i = 0, msgcat = messages[lang]; i < params.length; i++) {
+                code = params[i];
+                if (typeof msgcat[code] === 'object') {
+                    msgcat = msgcat[code];
                 }
-            };
-            lang = lang || 'ru_RU';
-            params = params.toLowerCase().split(':');
-            if (messages[lang] !== undefined && params.length) {
-                for (var i = 0, msgcat = messages[lang]; i < params.length; i++) {
-                    code = params[i];
-                    if (typeof msgcat[code] === 'object') {
-                        msgcat = msgcat[code];
-                    }
-                    if (typeof msgcat[code] === 'string') {
-                        translated = msgcat[code];
-                        break;
-                    }
+                if (typeof msgcat[code] === 'string') {
+                    translated = msgcat[code];
+                    break;
                 }
             }
-            return translated;
         }
+        return translated;
+    }
 
-        script.init = function() {
-            this.ajaxform.init('form.ajax');
-            this.ajax.init();
-        };
+    script.init = function() {
+        this.ajaxform.init('form.ajax');
+        this.ajax.init();
+    };
 
-        $(document).ready(function($) {
-            script.init();
-        });
+    $(document).ready(function($) {
+        script.init();
+    });
 })(jQuery);

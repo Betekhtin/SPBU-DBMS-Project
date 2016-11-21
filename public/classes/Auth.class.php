@@ -81,7 +81,7 @@ class User
             )
         );
         $this->user = $sth->fetch();
-        
+
         if (!$this->user) {
             $this->is_authorized = false;
         } else {
@@ -149,7 +149,7 @@ class User
             $info = $sth->errorInfo();
             printf("Database error %d %s", $info[1], $info[2]);
             die();
-        } 
+        }
 
         return $result;
     }

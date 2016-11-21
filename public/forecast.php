@@ -15,7 +15,7 @@ require_once 'classes/Auth.class.php';
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <title>История погоды | The weather service</title>
+        <title>Прогноз | The weather service</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/style.css">
     </head>
@@ -42,8 +42,8 @@ require_once 'classes/Auth.class.php';
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="history.php">История</a></li>
-                        <li><a href="forecast.php">Прогноз</a></li>
+                        <li><a href="history.php">История</a></li>
+                        <li class="active"><a href="forecast.php">Прогноз</a></li>
                         <li><a href="about.php">О проекте</a></li>
                     </ul>
                     <!-- Right navbar -->
@@ -64,12 +64,12 @@ require_once 'classes/Auth.class.php';
 
             <form class="form-horizontal" action="historyQuery.php" method="post">
                 <fieldset>
-                    <legend>История погоды</legend>
+                    <legend>Прогноз</legend>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="country">Страна</label>
                         <div class="col-md-4">
                           <select id="country" name="country" class="form-control">
-                              <option disabled selected value> ----------- </option>
+                            <option disabled selected value> ----------- </option>
                           </select>
                         </div>
                     </div>
@@ -100,15 +100,13 @@ require_once 'classes/Auth.class.php';
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-4">
-                            <button id="submit" name="submit" class="btn btn-success">Показать историю</button>
+                            <button id="submit" name="submit" class="btn btn-success">Получить прогноз</button>
                         </div>
                     </div>
 
                 </fieldset>
             </form>
-
             <?php else: ?>
-
             <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
             <form class="form-signin ajax" method="post" action="./ajax.php">
@@ -148,22 +146,22 @@ require_once 'classes/Auth.class.php';
                             <a id="authorizaton" name="authorizaton" class="btn btn-default" href="/register.php">Зарегистрироваться</a>
                         </div>
                     </div>
-                  </fieldset>
-              </form>
+                    </div>
+                </fieldset>
+            </form>
 
-              <?php endif; ?>
+            <?php endif; ?>
 
-              <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-              <script src="js/ajax-form.js"></script>
-              <script src="js/query-form-control.js"></script>
-              <script>
-                  var countries = JSON.parse('<?php echo json_encode(json_php("country")) ?>').country;
-                  var cities = JSON.parse('<?php echo json_encode(json_php("city")) ?>').city;
-                  var minDate = "2005-01-01";
-                  var maxDate = "2016-11-08";
-                  formControl(countries, cities, minDate, maxDate);
-              </script>
+            <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="js/ajax-form.js"></script>
+            <script src="js/query-form-control.js"></script>
+            <script>
+                var countries = JSON.parse('<?php echo json_encode(json_php("country")) ?>').country;
+                var cities = JSON.parse('<?php echo json_encode(json_php("city")) ?>').city;
+                var minDate = "2016-11-09";
+                formControl(countries, cities, minDate, null);
+            </script>
 
     </body>
 
