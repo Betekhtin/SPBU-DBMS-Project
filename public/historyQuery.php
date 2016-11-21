@@ -18,6 +18,8 @@ require_once 'classes/Auth.class.php';
         <title>История погоды | The weather service</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/style.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 
     <body>
@@ -230,7 +232,13 @@ require_once 'classes/Auth.class.php';
             </table>
 
         </main>
-<?php } ?>
+<?php } 
+
+else {
+    header('Location: index.php'); exit;
+}
+
+?>
 
 <?php else: ?>
         <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
@@ -280,8 +288,7 @@ require_once 'classes/Auth.class.php';
 
         <script src="js/hints.js"></script>
         <script src="js/ajax-form.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
 
     </body>
 
