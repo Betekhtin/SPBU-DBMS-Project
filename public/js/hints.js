@@ -47,6 +47,6 @@ function appear() {
         op += 0.1;
         tipObj.style.opacity = op;
         tipObj.style.filter = 'alpha(opacity=' + op * 100 + ')';
-        t = setTimeout('appear()', 50);
+        t = setTimeout('appear()', 30);
     }
 }

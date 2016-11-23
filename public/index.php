@@ -26,7 +26,7 @@ require_once 'classes/Auth.class.php';
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-        
+
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,7 +37,7 @@ require_once 'classes/Auth.class.php';
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </button>
-                    <a class="active navbar-brand glyphicon glyphicon-home" href="index.php"></a>
+                    <a class="navbar-brand glyphicon glyphicon-home" href="index.php"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar">
@@ -48,7 +48,7 @@ require_once 'classes/Auth.class.php';
                     </ul>
                     <!-- Right navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <form class="ajax" method="post" action="./ajax.php">
+                        <form id="logout" class="ajax" method="post" action="./ajax.php">
                             <input type="hidden" name="act" value="logout">
                             <div class="form-actions">
                                 <button class="btn btn-large btn-success" type="submit">Выйти</button>
@@ -67,7 +67,8 @@ require_once 'classes/Auth.class.php';
         <?php else: ?>
         <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-        <form class="form-signin ajax" method="post" action="./ajax.php">
+        <main>
+        <form class="authform form-signin ajax" method="post" action="./ajax.php">
             <fieldset>
                 <div class="main-error alert alert-error hide"></div>
 
@@ -107,7 +108,7 @@ require_once 'classes/Auth.class.php';
                 </div>
             </fieldset>
         </form>
-
+        </main>
         <?php endif; ?>
 
 

@@ -18,6 +18,7 @@ require_once 'classes/Auth.class.php';
         <title>История погоды | The weather service</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/tables.css">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
@@ -50,7 +51,7 @@ require_once 'classes/Auth.class.php';
                     </ul>
                     <!-- Right navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <form class="ajax" method="post" action="./ajax.php">
+                        <form id="logout" class="ajax" method="post" action="./ajax.php">
                             <input type="hidden" name="act" value="logout">
                             <div class="form-actions">
                                 <button class="btn btn-large btn-success" type="submit">Выйти</button>
@@ -95,96 +96,38 @@ require_once 'classes/Auth.class.php';
 //
       // echo count($temperature['temperature']);
 ?>
-        <main>
             <div id="hint" class="normal"></div>
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-bordered">
                 <tr class="header">
-                    <td onmouseover="tooltip( this , 'Время в данном населённом пункте. Учитывается летнее/зимнее время' ,  'hint' )" onmouseout="hideInfo(this , 'hint')" colspan="2">
-                        <div class="brdDateLightArc forDate">Date/Time</td>
-                    <td onmouseover="tooltip( this , 'Температура воздуха (градусы Цельсия) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">T</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Атмосферное давление на уровне станции (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Po</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Атмосферное давление, приведенное к среднему уровню моря (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">P</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Барическая тенденция: изменение атмосферного давления за последние три часа (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Pa</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Относительная влажность (%) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">U</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Направление ветра (румбы) на высоте 10-12 метров над земной поверхностью, осредненное за 10-минутный период, непосредственно предшествовавший сроку наблюдения' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">DD</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Cкорость ветра на высоте 10-12 метров над земной поверхностью, осредненная за 10-минутный период, непосредственно предшествовавший сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Ff</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за 10-минутный период, непосредственно предшествующий сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">ff10</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за период между сроками (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">ff3</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Общая облачность' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">N</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Текущая погода, сообщаемая с метеорологической станции' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">WW</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 1' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">W1</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 2' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">W2</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Минимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Tn</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Максимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Tx</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Слоисто-кучевые, слоистые, кучевые и кучево-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Cl</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Количество всех наблюдающихся облаков Cl или, при отсутствии облаков Cl, количество всех наблюдающихся облаков Cm' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Nh</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Высота основания самых низких облаков (м)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">H</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Высококучевые, высокослоистые и слоисто-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Cm</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Перистые, перисто-кучевые и перисто-слоистые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Ch</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Горизонтальная дальность видимости (км)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">VV</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Температура точки росы на высоте 2 метра над поверхностью земли (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Td</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Количество выпавших осадков (миллиметры)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">RRR</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Период времени, за который накоплено указанное количество осадков (часы)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">tR</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы без снега или измеримого ледяного покрова' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">E</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Минимальная температура поверхности почвы за ночь. (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">Tg</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы со снегом или измеримым ледяным покровом' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">E'</div>
-                    </td>
-                    <td onmouseover="tooltip( this , 'Высота снежного покрова (см)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">
-                        <div class="brdDateLightArc">sss</div>
-                    </td>
+                    <td onmouseover="tooltip( this , 'Время в данном населённом пункте. Учитывается летнее/зимнее время' ,  'hint' )" onmouseout="hideInfo(this , 'hint')" colspan="2">Дата/Время</td>
+                    <td onmouseover="tooltip( this , 'Температура воздуха (градусы Цельсия) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">T</td>
+                    <td onmouseover="tooltip( this , 'Атмосферное давление на уровне станции (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Po</td>
+                    <td onmouseover="tooltip( this , 'Атмосферное давление, приведенное к среднему уровню моря (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">P</td>
+                    <td onmouseover="tooltip( this , 'Барическая тенденция: изменение атмосферного давления за последние три часа (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Pa</td>
+                    <td onmouseover="tooltip( this , 'Относительная влажность (%) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">U</td>
+                    <td onmouseover="tooltip( this , 'Направление ветра (румбы) на высоте 10-12 метров над земной поверхностью, осредненное за 10-минутный период, непосредственно предшествовавший сроку наблюдения' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">DD</td>
+                    <td onmouseover="tooltip( this , 'Cкорость ветра на высоте 10-12 метров над земной поверхностью, осредненная за 10-минутный период, непосредственно предшествовавший сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Ff</td>
+                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за 10-минутный период, непосредственно предшествующий сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">ff10</td>
+                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за период между сроками (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">ff3</td>
+                    <td onmouseover="tooltip( this , 'Общая облачность' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">N</td>
+                    <td onmouseover="tooltip( this , 'Текущая погода, сообщаемая с метеорологической станции' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">WW</td>
+                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 1' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">W1</td>
+                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 2' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">W2</td>
+                    <td onmouseover="tooltip( this , 'Минимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tn</td>
+                    <td onmouseover="tooltip( this , 'Максимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tx</td>
+                    <td onmouseover="tooltip( this , 'Слоисто-кучевые, слоистые, кучевые и кучево-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Cl</td>
+                    <td onmouseover="tooltip( this , 'Количество всех наблюдающихся облаков Cl или, при отсутствии облаков Cl, количество всех наблюдающихся облаков Cm' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Nh</td>
+                    <td onmouseover="tooltip( this , 'Высота основания самых низких облаков (м)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">H</td>
+                    <td onmouseover="tooltip( this , 'Высококучевые, высокослоистые и слоисто-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Cm</td>
+                    <td onmouseover="tooltip( this , 'Перистые, перисто-кучевые и перисто-слоистые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Ch</td>
+                    <td onmouseover="tooltip( this , 'Горизонтальная дальность видимости (км)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">VV</td>
+                    <td onmouseover="tooltip( this , 'Температура точки росы на высоте 2 метра над поверхностью земли (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Td</td>
+                    <td onmouseover="tooltip( this , 'Количество выпавших осадков (миллиметры)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">RRR</td>
+                    <td onmouseover="tooltip( this , 'Период времени, за который накоплено указанное количество осадков (часы)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">tR</td>
+                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы без снега или измеримого ледяного покрова' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">E</td>
+                    <td onmouseover="tooltip( this , 'Минимальная температура поверхности почвы за ночь. (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tg</td>
+                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы со снегом или измеримым ледяным покровом' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">E'</td>
+                    <td onmouseover="tooltip( this , 'Высота снежного покрова (см)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">sss</td>
                 </tr>
                 <tbody>
 <?php
@@ -195,7 +138,7 @@ require_once 'classes/Auth.class.php';
            $str=$temperature['temperature'][$i]['date'];
            $tmp=explode(" ", $str);
            echo '<td>'.$tmp[0].'</td>';
-           echo '<td>'.$tmp[1].'</td>';
+           echo '<td class="time">'.$tmp[1].'</td>';
            echo '<td>'.$temperature['temperature'][$i]['T'].'</td>';
            echo '<td>'.$pressure['pressure'][$i]['P0'].'</td>';
            echo '<td>'.$pressure['pressure'][$i]['P'].'</td>';
@@ -230,9 +173,7 @@ require_once 'classes/Auth.class.php';
                         <tr></tr>
                 </tbody>
             </table>
-
-        </main>
-<?php } 
+<?php }
 
 else {
     header('Location: index.php'); exit;
@@ -243,7 +184,7 @@ else {
 <?php else: ?>
         <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-        <form class="form-signin ajax" method="post" action="./ajax.php">
+        <form class="authform form-signin ajax col-lg-12" method="post" action="./ajax.php">
             <fieldset>
                 <div class="main-error alert alert-error hide"></div>
 
@@ -283,12 +224,11 @@ else {
                 </div>
             </fieldset>
         </form>
-
 <?php endif; ?>
 
         <script src="js/hints.js"></script>
         <script src="js/ajax-form.js"></script>
-        
+        <script src="js/table-control.js"></script>
 
     </body>
 

@@ -23,19 +23,20 @@ require_once 'classes/Auth.class.php';
 
     <body>
         <?php if (Auth\User::isAuthorized()): ?>
-
-        <h1>Вы уже авторизованы</h1>
-
-        <form class="ajax" method="post" action="./ajax.php">
-            <input type="hidden" name="act" value="logout">
-            <div class="form-actions">
-                <button class="btn btn-large btn-primary" type="submit">Выйти</button>
-            </div>
-        </form>
+        <main>
+            <form>
+                <legend>Вы уже авторизованы</legend>
+                  <button class="btn btn-large btn-default" onclick="window.history.back()">Вернуться</button>
+                  <form class="ajax" method="post" action="./ajax.php">
+                        <input type="hidden" name="act" value="logout">
+                        <button class="btn btn-large btn-success" type="submit">Выйти</button>
+                  </form>
+            </form>
+        </main>
 
         <?php else: ?>
-
-        <form class="form-signin ajax" method="post" action="./ajax.php">
+        <main class="center-block">
+        <form class="authform form-signin ajax" method="post" action="./ajax.php">
             <fieldset>
                 <div class="main-error alert alert-error hide"></div>
 
@@ -72,6 +73,7 @@ require_once 'classes/Auth.class.php';
                 </div>
             </fieldset>
         </form>
+        </main>
         <?php endif; ?>
 
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

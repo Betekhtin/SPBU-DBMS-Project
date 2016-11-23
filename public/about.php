@@ -23,7 +23,7 @@ require_once 'classes/Auth.class.php';
     <body>
 
         <?php if (Auth\User::isAuthorized()): ?>
-          
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
@@ -49,7 +49,7 @@ require_once 'classes/Auth.class.php';
                     </ul>
                     <!-- Right navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <form class="ajax" method="post" action="./ajax.php">
+                        <form id="logout" class="ajax" method="post" action="./ajax.php">
                             <input type="hidden" name="act" value="logout">
                             <div class="form-actions">
                                 <button class="btn btn-large btn-success" type="submit">Выйти</button>
@@ -67,7 +67,8 @@ require_once 'classes/Auth.class.php';
         <?php else: ?>
         <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-        <form class="form-signin ajax" method="post" action="./ajax.php">
+        <main>
+        <form class="authform form-signin ajax" method="post" action="./ajax.php">
             <fieldset>
                 <div class="main-error alert alert-error hide"></div>
 
@@ -107,7 +108,7 @@ require_once 'classes/Auth.class.php';
                 </div>
             </fieldset>
         </form>
-
+        </main>
         <?php endif; ?>
 
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
