@@ -73,6 +73,21 @@ def historyQuery(request):
 
         date_to=request.POST.get('date_to','')
         date_to = date_to + ' 23:00:00'
-        args['temperature'] = list(temperature.objects.filter(date__gte=date_from, date__lte=date_to,city_id__exact=city).order_by('date').values())
-        args['pressure'] =   list(pressure.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        d_temperature= list(temperature.objects.filter(date__gte=date_from, date__lte=date_to,city_id__exact=city).order_by('date').values())
+        d_pressure =list(pressure.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        d_weather = list(weather.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        d_clouds = list(clouds.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        d_other_weather_data = list(other_weather_data.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        d_wind = list(wind.objects.filter(date__gte=date_from, date__lte=date_to, city_id__exact=city).order_by('date').values())
+        # for i in listone:
+        #     print(i['date'])
+        # for i,j in zip(listone,listtwo):
+        #      i.update(j)
+        for a,b,c,d,e,f in zip(d_temperature, d_pressure,d_weather,d_clouds,d_other_weather_data,d_wind):
+         a.update(b)
+         a.update(c)
+         a.update(d)
+         a.update(e)
+         a.update(f)
+        args['data'] = d_temperature
     return render_to_response("q_history.html", args)
