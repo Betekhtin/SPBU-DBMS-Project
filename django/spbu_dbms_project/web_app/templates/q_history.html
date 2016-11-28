@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+
+{% block hq_head %}
+        <title>История погоды | The weather service</title>
+        <link rel="stylesheet" href="{%static 'tables.css'%}">
+{% endblock %}
+
+{% block hq_main %}
+            <div id="hint" class="normal"></div>
+            <table class="table table-bordered">
+                <tr class="header">
+                    <td onmouseover="tooltip( this , 'Время в данном населённом пункте. Учитывается летнее/зимнее время' ,  'hint' )" onmouseout="hideInfo(this , 'hint')" colspan="1">Дата/Время</td>
+                    <td onmouseover="tooltip( this , 'Температура воздуха (градусы Цельсия) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">T</td>
+                    <td onmouseover="tooltip( this , 'Атмосферное давление на уровне станции (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Po</td>
+                    <td onmouseover="tooltip( this , 'Атмосферное давление, приведенное к среднему уровню моря (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">P</td>
+                    <td onmouseover="tooltip( this , 'Барическая тенденция: изменение атмосферного давления за последние три часа (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Pa</td>
+                    <td onmouseover="tooltip( this , 'Относительная влажность (%) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">U</td>
+                    <td onmouseover="tooltip( this , 'Направление ветра (румбы) на высоте 10-12 метров над земной поверхностью, осредненное за 10-минутный период, непосредственно предшествовавший сроку наблюдения' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">DD</td>
+                    <td onmouseover="tooltip( this , 'Cкорость ветра на высоте 10-12 метров над земной поверхностью, осредненная за 10-минутный период, непосредственно предшествовавший сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Ff</td>
+                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за 10-минутный период, непосредственно предшествующий сроку наблюдения (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">ff10</td>
+                    <td onmouseover="tooltip( this , 'Максимальное значение порыва ветра на высоте 10-12 метров над земной поверхностью за период между сроками (метры в секунду)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">ff3</td>
+                    <td onmouseover="tooltip( this , 'Общая облачность' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">N</td>
+                    <td onmouseover="tooltip( this , 'Текущая погода, сообщаемая с метеорологической станции' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">WW</td>
+                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 1' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">W1</td>
+                    <td onmouseover="tooltip( this , 'Прошедшая погода между сроками наблюдения 2' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">W2</td>
+                    <td onmouseover="tooltip( this , 'Минимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tn</td>
+                    <td onmouseover="tooltip( this , 'Максимальная температура воздуха (градусы Цельсия) за прошедший период (не более 12 часов)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tx</td>
+                    <td onmouseover="tooltip( this , 'Слоисто-кучевые, слоистые, кучевые и кучево-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Cl</td>
+                    <td onmouseover="tooltip( this , 'Количество всех наблюдающихся облаков Cl или, при отсутствии облаков Cl, количество всех наблюдающихся облаков Cm' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Nh</td>
+                    <td onmouseover="tooltip( this , 'Высота основания самых низких облаков (м)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">H</td>
+                    <td onmouseover="tooltip( this , 'Высококучевые, высокослоистые и слоисто-дождевые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Cm</td>
+                    <td onmouseover="tooltip( this , 'Перистые, перисто-кучевые и перисто-слоистые облака' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Ch</td>
+                    <td onmouseover="tooltip( this , 'Горизонтальная дальность видимости (км)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">VV</td>
+                    <td onmouseover="tooltip( this , 'Температура точки росы на высоте 2 метра над поверхностью земли (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Td</td>
+                    <td onmouseover="tooltip( this , 'Количество выпавших осадков (миллиметры)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">RRR</td>
+                    <td onmouseover="tooltip( this , 'Период времени, за который накоплено указанное количество осадков (часы)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">tR</td>
+                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы без снега или измеримого ледяного покрова' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">E</td>
+                    <td onmouseover="tooltip( this , 'Минимальная температура поверхности почвы за ночь. (градусы Цельсия)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">Tg</td>
+                    <td onmouseover="tooltip( this , 'Состояние поверхности почвы со снегом или измеримым ледяным покровом' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">E'</td>
+                    <td onmouseover="tooltip( this , 'Высота снежного покрова (см)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">sss</td>
+                </tr>
+                <tbody>
+
+                {% for i in temperature %}
+                <tr>
+                            <td> {{i.date}} </td>
+
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+
+{% endblock %}
+
+{% block hq_script %}
+        <script src="{% static 'js/hints.js'%}"></script>
+        <script src="{% static 'js/ajax-form.js'%}"></script>
+        <script src="{%static 'js/table-control.js'%}"></script>
+{%  endblock %}

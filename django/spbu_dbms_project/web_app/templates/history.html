@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+{% block history_head%}
+        <title>История погоды | The weather service</title>
+{% endblock %}
+
+{% block history_main %}
+        <main class="center-block">
+
+            <form class="form-horizontal" action="/q_history/" method="post">
+                <fieldset>
+                    <legend>История погоды</legend>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="country">Страна</label>
+                        <div class="col-md-4">
+                          <select id="country" name="country" class="form-control">
+                              <option disabled selected value> ----------- </option>
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="city">Город</label>
+                        <div class="col-md-4">
+                            <select id="city" name="city" class="form-control" disabled>
+                              <option disabled selected value> ----------- </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="date_from">От</label>
+                        <div class="col-md-4">
+                            <input type="date" id="date_from" name="date_from" class="form-control" required></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="date_to">До</label>
+                        <div class="col-md-4">
+                            <input type="date" id="date_to" name="date_to" class="form-control" required></input>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="submit"></label>
+                        <div class="col-md-4">
+                            <button id="submit" name="submit" class="btn btn-success">Показать историю</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+{% endblock %}
+             {% block history_script %}
+
+              <script src="{% static 'js/query-form-control.js' %}"></script>
+              <script>
+                  var countries = JSON.parse('{{ country | safe }}');
+                  var cities = JSON.parse('{{ city | safe }}');
+                  console.log(countries);
+                  var minDate = "2005-01-01";
+                  var maxDate = "2016-11-08";
+                  formControl(countries, cities, minDate, maxDate);
+
+
+
+              </script>
+            {% endblock %}
+
