@@ -36,6 +36,7 @@
                         {% block history_decor %}{% endblock %}
                         {% block about_decor %}{% endblock %}
                         {% block index_decor %}{% endblock %}
+                            {% block forecast_decor %}{% endblock %}
 
                     </ul>
                     <!-- Right navbar -->
@@ -54,16 +55,18 @@
             <!-- /.container-fluid -->
         </nav>
 
-{% block index_main %}{% endblock %}
-{% block about_main %}{% endblock %}
+        {% block index_main %}{% endblock %}
+        {% block about_main %}{% endblock %}
         {% block history_main %}{% endblock %}
         {% block hq_main %}{% endblock %}
         {% block forecast_main %}{% endblock %}
+        {% block fq_main %}{% endblock %}
 
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% block history_script %}{% endblock %}
 {% block hq_script %}{% endblock %}
+        {% block forecast_script %}{% endblock %}
     </body>
 
     </html>

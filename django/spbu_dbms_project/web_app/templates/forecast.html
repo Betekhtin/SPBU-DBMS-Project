@@ -1,21 +1,22 @@
 {% extends 'main.html' %}
 {% load staticfiles %}
 
-{% block history_head%}
-        <title>История погоды | The weather service</title>
+
+{% block forecast_head %}
+        <title>Прогноз | The weather service</title>
 {% endblock %}
 
-{% block history_main %}
+{%block forecast_main %}
         <main class="center-block">
 
-            <form class="form-horizontal" action="/q_history/" method="post">
+            <form class="form-horizontal" action="/q_forecast/" method="post">
                 <fieldset>
-                    <legend>История погоды</legend>
+                    <legend>Прогноз</legend>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="country">Страна</label>
                         <div class="col-md-4">
                           <select id="country" name="country" class="form-control">
-                              <option disabled selected value> ----------- </option>
+                            <option disabled selected value> ----------- </option>
                           </select>
                         </div>
                     </div>
@@ -46,32 +47,28 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-4">
-                            <button id="submit" name="submit" class="btn btn-success">Показать историю</button>
+                            <button id="submit" name="submit" class="btn btn-success">Получить прогноз</button>
                         </div>
                     </div>
 
                 </fieldset>
             </form>
+        </main>
 {% endblock %}
-             {% block history_script %}
 
+{% block forecast_script %}
               <script src="{% static 'js/query-form-control.js' %}"></script>
-              <script>
-                  var countries = JSON.parse('{{ country | safe }}');
+             <script>
+                   var countries = JSON.parse('{{ country | safe }}');
                   var cities = JSON.parse('{{ city | safe }}');
-                  var minDate = "2005-01-01";
-                  var maxDate = "2016-11-08";
-                  formControl(countries, cities, minDate, maxDate);
+                var minDate = "2016-11-09";
+                formControl(countries, cities, minDate, null);
+            </script>
+{% endblock %}
 
-
-
-              </script>
-            {% endblock %}
-
-
-    {%block history_decor %}
-             <li class="active"><a href="/history">История</a></li>
-            <li><a href="/forecast">Прогноз</a></li>
+{%block forecast_decor %}
+            <li><a href="/history">История</a></li>
+            <li class="active"><a href="/forecast">Прогноз</a></li>
             <li><a href="/about">О проекте</a></li>
 
-            {% endblock %}
+{% endblock %}

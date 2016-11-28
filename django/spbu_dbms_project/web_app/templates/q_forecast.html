@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load staticfiles %}
+
+
+{% block hq_head %}
+        <title>История погоды | The weather service</title>
+        <link rel="stylesheet" href="{%static 'tables.css'%}">
+{% endblock %}
+
+{% block fq_main %}
+            <div id="hint" class="normal"></div>
+            <table class="table table-bordered">
+                <tr class="header">
+                    <td onmouseover="tooltip( this , 'Время в данном населённом пункте. Учитывается летнее/зимнее время' ,  'hint' )" onmouseout="hideInfo(this , 'hint')" colspan="1">Дата/Время</td>
+                    <td onmouseover="tooltip( this , 'Температура воздуха (градусы Цельсия) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">T</td>
+                    <td onmouseover="tooltip( this , 'Атмосферное давление, приведенное к среднему уровню моря (миллиметры ртутного столба)' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">P</td>
+                    <td onmouseover="tooltip( this , 'Относительная влажность (%) на высоте 2 метра над поверхностью земли' ,  'hint' )" onmouseout="hideInfo( this , 'hint' )">U</td>
+
+                </tr>
+                <tbody>
+                <tr>
+                    <td> {{date}} </td>
+                            <td> {{T}} </td>
+                            <td> {{P}} </td>
+                            <td> {{U}} </td>
+
+                </tr>
+
+
+
+                </tbody>
+            </table>
+
+{% endblock %}
+
+{% block hq_script %}
+        <script src="{% static 'js/hints.js'%}"></script>
+        <script src="{% static 'js/ajax-form.js'%}"></script>
+        <script src="{% static 'js/table-control.js'%}"></script>
+{%  endblock %}
+
+{%block forecast_decor %}
+            <li><a href="/history">История</a></li>
+            <li class="active"><a href="/forecast">Прогноз</a></li>
+            <li><a href="/about">О проекте</a></li>
+
+{% endblock %}
