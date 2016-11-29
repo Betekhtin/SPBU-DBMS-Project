@@ -3,8 +3,9 @@ $(document).ready(function() {
   var rows = table.find("tr");
   for(var i = 1; i < rows.length; ++i){
     var row = $(rows[i]);
-    var time = row.find(".time").text();
-    if (time >= "07:00:00" && time < "21:00:00") row.addClass("day");
+    var date = row.find(".date").text();
+    var time = date.split(" ")[5].split(":")[0];
+    if (time >= 7 && time < 21)row.addClass("day");
     else row.addClass("night");
   }
 });

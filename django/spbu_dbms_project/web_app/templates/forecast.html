@@ -31,13 +31,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="date_from">От</label>
-                        <div class="col-md-4">
-                            <input type="date" id="date_from" name="date_from" class="form-control" required></input>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         <label class="col-md-4 control-label" for="date_to">До</label>
                         <div class="col-md-4">
                             <input type="date" id="date_to" name="date_to" class="form-control" required></input>
@@ -57,18 +50,19 @@
 {% endblock %}
 
 {% block forecast_script %}
-              <script src="{% static 'js/query-form-control.js' %}"></script>
-             <script>
-                   var countries = JSON.parse('{{ country | safe }}');
-                  var cities = JSON.parse('{{ city | safe }}');
-                var minDate = "2016-11-09";
-                formControl(countries, cities, minDate, null);
-            </script>
+        <script src="{% static 'js/query-form-control.js' %}"></script>
+        <script>
+          var countries = JSON.parse('{{ country | safe }}');
+          var cities = JSON.parse('{{ city | safe }}');
+          var minDate = "2016-11-09";
+          var maxDate = "2016-11-16";
+          formControl(countries, cities, minDate, maxDate);
+        </script>
 {% endblock %}
 
 {%block forecast_decor %}
-            <li><a href="/history">История</a></li>
-            <li class="active"><a href="/forecast">Прогноз</a></li>
-            <li><a href="/about">О проекте</a></li>
+        <li><a href="/history">История</a></li>
+        <li class="active"><a href="/forecast">Прогноз</a></li>
+        <li><a href="/about">О проекте</a></li>
 
 {% endblock %}
