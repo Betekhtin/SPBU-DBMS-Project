@@ -19,11 +19,14 @@ from web_app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls), #zharkov ehjl1122
-    url(r'^$', views.index, name='index_page'),
-    url(r'^about/', views.about, name='about_page'),
+    url(r'^$', views.index, name='index'),
+    url(r'^about/', views.about, name='about'),
     url(r'^login/', views.login, name='login'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^q_history/', views.historyQuery, name='historyQuery'),
     url(r'^history/', views.history, name='history'),
+    url(r'^forecast/', views.forecast, name='forecast'),
+    url(r'^q_forecast/', views.forecastQuery, name='forecastQuery'),
+
 
 ]
