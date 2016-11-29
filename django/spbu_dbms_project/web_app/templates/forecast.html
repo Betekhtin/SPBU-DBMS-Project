@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="date_to">До</label>
                         <div class="col-md-4">
-                            <input type="date" id="date_to" name="date_to" class="form-control" required></input>
+                            <input type="date" id="date_to" name="date_to" class="form-control" required disabled></input>
                         </div>
                     </div>
 
@@ -50,17 +50,17 @@
 {% endblock %}
 
 {% block forecast_script %}
-              <script src="{% static 'js/query-form-control.js' %}"></script>
+             <script src="{% static 'js/query-form-control.js' %}"></script>
              <script>
                 var countries = JSON.parse('{{ country | safe }}');
                 var cities = JSON.parse('{{ city | safe }}');
-                var minDate = "2016-11-09";
-                var dates;
+                var dates = [];
                 {%for i in max_date %}
-                console.log('{{i}}');
+                dates.push(dateParse('{{i}}'));
                 {% endfor %}
+                console.log(dates);
                 //var min_Date="{{ max_date }}";
-                formControl(countries, cities, minDate, null);
+                formControl(countries, cities, dates);
             </script>
 {% endblock %}
 

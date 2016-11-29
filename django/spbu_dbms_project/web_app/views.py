@@ -69,6 +69,9 @@ def history(request):
         args={}
         args['city']=city_json
         args['country'] = country_json
+        args['max_date'] = []
+        for i in сt:
+            args['max_date'].append((temperature.objects.filter(city_id__exact=i['city_id']).latest('date').date))
         return render_to_response("history.html",args)
     else:
         return redirect("/login")
