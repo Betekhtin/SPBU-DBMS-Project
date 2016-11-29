@@ -50,19 +50,23 @@
 {% endblock %}
 
 {% block forecast_script %}
-        <script src="{% static 'js/query-form-control.js' %}"></script>
-        <script>
-          var countries = JSON.parse('{{ country | safe }}');
-          var cities = JSON.parse('{{ city | safe }}');
-          var minDate = "2016-11-09";
-          var maxDate = "2016-11-16";
-          formControl(countries, cities, minDate, maxDate);
-        </script>
+              <script src="{% static 'js/query-form-control.js' %}"></script>
+             <script>
+                var countries = JSON.parse('{{ country | safe }}');
+                var cities = JSON.parse('{{ city | safe }}');
+                var minDate = "2016-11-09";
+                var dates;
+                {%for i in max_date %}
+                console.log('{{i}}');
+                {% endfor %}
+                //var min_Date="{{ max_date }}";
+                formControl(countries, cities, minDate, null);
+            </script>
 {% endblock %}
 
 {%block forecast_decor %}
-        <li><a href="/history">История</a></li>
-        <li class="active"><a href="/forecast">Прогноз</a></li>
-        <li><a href="/about">О проекте</a></li>
+            <li><a href="/history">История</a></li>
+            <li class="active"><a href="/forecast">Прогноз</a></li>
+            <li><a href="/about">О проекте</a></li>
 
 {% endblock %}

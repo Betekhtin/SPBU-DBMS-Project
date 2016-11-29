@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^history/', views.history, name='history'),
     url(r'^forecast/', views.forecast, name='forecast'),
     url(r'^q_forecast/', views.forecastQuery, name='forecastQuery'),
+    url(r'^register/', views.register, name='register'),
 
 
 ]

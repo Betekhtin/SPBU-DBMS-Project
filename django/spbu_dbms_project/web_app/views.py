@@ -13,6 +13,7 @@ from web_app.models import temperature, weather, clouds, pressure, other_weather
 from django.views.decorators.csrf import csrf_exempt
 import numpy as np
 import datetime
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def index(request):
@@ -35,7 +36,7 @@ def login(request):
         return redirect('/')
     else:
         args = {}
-        args=(csrf(request))
+        args.update(csrf(request))
         if request.POST:
             username = request.POST.get('username','')
             password = request.POST.get('password','')
@@ -46,7 +47,7 @@ def login(request):
                 auth.login(request, user)
                 return redirect('/')
             else:
-                args['login_error'] = format_html("<div class=\"main-error alert alert-error\">Invalid username or password</div>")
+                args['login_error'] = format_html("<div class=\"main-error alert alert-error\">Неправильное имя пользователя или пароль</div>")
                 return render_to_response('login.html', args)
         else:
             return render_to_response('login.html', args)
@@ -117,6 +118,11 @@ def forecast(request):
         args={}
         args['city']=city_json
         args['country'] = country_json
+        args['max_date']=[]
+        for i in сt:
+            args['max_date'].append((temperature.objects.filter(city_id__exact = i['city_id']).latest('date').date))
+
+        #args['max_date'] = (temperature.objects.filter(city_id__exact=city).latest('date').date)
         return render_to_response("forecast.html",args)
     else:
         return redirect("/login")
@@ -179,3 +185,22 @@ def forecastQuery(request):
     else:
         return redirect("/login")
 
+def register(request):
+    username = auth.get_user(request).username
+    if not (username):
+        args={}
+        args.update(csrf(request))
+        args['form']=UserCreationForm()
+        if request.POST:
+            newuser_form=UserCreationForm(request.POST)
+            if newuser_form.is_valid():
+                newuser_form.save()
+                newuser = auth.authenticate(username=newuser_form.cleaned_data['username'],password=newuser_form.cleaned_data['password2'])
+                auth.login(request, newuser)
+                return redirect('/')
+            else:
+                args['errors'] = format_html('<div class="main-error alert alert-error">Ошибка при регистрации</div>')
+                args['form'] = newuser_form
+        return render_to_response('register.html',args)
+    else:
+        return redirect('/')
