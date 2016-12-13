@@ -2,6 +2,13 @@
     margin: 0px;
     padding: 0px;
 }
+html, body {
+    height: 100%;
+}
+.container {
+    height: calc(100% - 54.4px);
+    margin-top: -20px;
+}
 body {
     background: url("images/back.jpg") no-repeat center center fixed;
     background-size: cover;
@@ -14,6 +21,9 @@ form {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 10px;
     border-radius: 3px;
+}
+.background {
+    background: rgba(255, 255, 255, 0.95);
 }
 .authform {
   margin-top: 5%;

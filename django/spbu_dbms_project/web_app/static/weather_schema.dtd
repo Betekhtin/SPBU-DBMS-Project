@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<!DOCTYPE weather
-[
+
 <!ELEMENT weather (item+)>
 <!ELEMENT item (Ch, P0, Tx, ff10, ff3, date, P, Cl, temperature_id, T, Tn, Tg, W2, sss, other_weather_data, RRR, Ff, W1, DD, E, VV, clouds_id, Td, E1, wind_id, pressure_id, U, H, tR, WW, city_id, N, Cm, Nh, Pa, weather_id)>
 <!ELEMENT Ch (#PCDATA)>
@@ -39,4 +38,3 @@
 <!ELEMENT Nh (#PCDATA)>
 <!ELEMENT Pa (#PCDATA)>
 <!ELEMENT weather_id (#PCDATA)>
-]>    
