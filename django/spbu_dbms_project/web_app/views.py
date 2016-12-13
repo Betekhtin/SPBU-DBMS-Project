@@ -14,6 +14,9 @@ from django.views.decorators.csrf import csrf_exempt
 import numpy as np
 import datetime
 from django.contrib.auth.forms import UserCreationForm
+from django.core import serializers
+from dicttoxml import dicttoxml as xmlify
+from xml.dom.minidom import parseString
 # Create your views here.
 
 def index(request):
@@ -105,6 +108,10 @@ def historyQuery(request):
              a.update(e)
              a.update(f)
             args['data'] = d_temperature
+
+            dom=parseString(xmlify(d_temperature, custom_root='weather',attr_type=False))
+            args['xml']=(dom.toprettyxml())
+
             return render_to_response("q_history.html", args)
         return redirect('/history')
     else:

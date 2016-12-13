@@ -1,7 +1,6 @@
 {% extends 'main.html' %}
 {% load staticfiles %}
 
-
 {% block hq_head %}
         <title>История погоды | The weather service</title>
         <link rel="stylesheet" href="{%static 'tables.css'%}">
@@ -74,6 +73,7 @@
                     <td> {{i.Tg}} </td>
                     <td> {{i.E1}} </td>
                     <td> {{i.sss}} </td>
+
                 </tr>
                 {% endfor %}
 
@@ -93,5 +93,5 @@
              <li class="active"><a href="/history">История</a></li>
             <li><a href="/forecast">Прогноз</a></li>
             <li><a href="/about">О проекте</a></li>
-
+{{xml}}
             {% endblock %}
