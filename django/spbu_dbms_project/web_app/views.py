@@ -18,6 +18,7 @@ from django.core import serializers
 from dicttoxml import dicttoxml as xmlify
 from xml.dom.minidom import parseString
 import re
+from dateutil.relativedelta import relativedelta
 # Create your views here.
 
 def index(request):
@@ -146,9 +147,56 @@ def forecastQuery(request):
         args = {}
         if request.POST:
             city=request.POST.get('city', '')
-            date_from= request.POST.get('date_from','')
             date_to = request.POST.get('date_to','')
-            #date_to = date_to + ' 23:00:00'
+           # minus_year=datetime.timedelta(days=36524.25)
+            date_del=datetime.datetime.strptime(date_to,'%Y-%m-%d')
+            min_date=temperature.objects.filter(city_id__exact=city).earliest('date').date
+            T=[]
+            P = []
+            U = []
+
+            while date_del>=min_date:
+                date_del= date_del - relativedelta(years=1)
+                tmp_T=list(temperature.objects.filter(date__gte=date_del, date__lt=date_del+relativedelta(days=1), city_id__exact=city).order_by('date').values('T','date'))
+                tmp_P = list(pressure.objects.filter(date__exact=date_del, city_id__exact=city).order_by('date').values('P'))
+                tmp_U = list(other_weather_data.objects.filter(date__exact=date_del, city_id__exact=city).order_by('date').values('U'))
+                av = []
+                for i in tmp_T:
+                    try: av.append(float(i['T']))
+                    except: continue
+                av=np.average(np.array(av))
+                T.append(av)
+                av = []
+                for i in tmp_P:
+                    try: av.append(float(i['P']))
+                    except: continue
+                av = np.average(np.array(av))
+                P.append(av)
+                av = []
+                for i in tmp_U:
+                    try:av.append(float(i['U']))
+                    except: continue
+                av = np.average(np.array(av))
+                U.append(av)
+            T.reverse()
+            P.reverse()
+            U.reverse()
+            print(T)
+            T=np.array(T[1:len(T)])
+            P=np.array(P[1:len(P)])
+            U=np.array(U[1:len(U)])
+
+            x_t = np.linspace(0, T.size - 1, T.size)
+            x_p = np.linspace(0, P.size - 1, P.size)
+            x_u = np.linspace(0, U.size - 1, U.size)
+
+            res_T = np.polyfit(x_t, T, 4)
+            res_P = np.polyfit(x_p, P, 4)
+            res_U = np.polyfit(x_u, U, 4)
+            T_1 = np.polyval(res_T, T.size)
+            P_1 = np.polyval(res_P,P.size)
+            U_1 = np.polyval(res_U,U.size)
+            print(T_1,P_1,U_1)
 
             date_tmp=datetime.datetime.strptime(date_to,'%Y-%m-%d')-datetime.timedelta(days=60)
 
@@ -159,39 +207,39 @@ def forecastQuery(request):
                 a.update(b)
                 a.update(c)
 
-            #  a.update(e)
-            #  a.update(f)
             T=[]
             P=[]
             U=[]
             for i in T_t:
-                T.append(i['T'])
-                P.append(i['P'])
-                U.append(i['U'])
-            tmp = np.array([481, 482, 483, 484, 485, 486, 487, 488])
+                try:T.append(float(i['T']))
+                except: print()
+                try:P.append(float(i['P']))
+                except: print()
+                try: U.append(float(i['U']))
+                except: print()
+
             T=np.array(T)
             P = np.array(P)
             U = np.array(U)
-            x = np.linspace(0, T.size - 1, T.size)
-            res_T = np.polyfit(x, T, 4)
-            res_P = np.polyfit(x, P, 4)
-            res_U = np.polyfit(x, U, 4)
-            T = (np.average(np.polyval(res_T, tmp)))
-            P = (np.average(np.polyval(res_P, tmp)))
-            U = (np.average(np.polyval(res_U, tmp)))
-            date_to=datetime.datetime.strptime(date_to, '%Y-%m-%d')
 
+            x_t = np.linspace(0, T.size - 1, T.size)
+            x_p = np.linspace(0, P.size - 1, P.size)
+            x_u = np.linspace(0, U.size - 1, U.size)
+            res_T = np.polyfit(x_t, T, 4)
+            res_P = np.polyfit(x_p, P, 4)
+            res_U = np.polyfit(x_u, U, 4)
+            T = ((np.polyval(res_T, T.size+4)))
+            P = ((np.polyval(res_P, P.size+4)))
+            U = ((np.polyval(res_U, U.size+4)))
+            print(T,P,U)
+            T = np.average([ T])
+            P = np.average([ P])
+            U = np.average([ U])
+            date_to=datetime.datetime.strptime(date_to, '%Y-%m-%d')
             args['date']=date_to.date()
             args['T'] = str(T)
             args['P'] = str(P)
             args['U'] = str(U)
-            # for a,b,c,d,e,f in zip(d_temperature, d_pressure,d_weather,d_clouds,d_other_weather_data,d_wind):
-            #  a.update(b)
-            #  a.update(c)
-            #  a.update(d)
-            #  a.update(e)
-            #  a.update(f)
-            # args['data'] = d_temperature
             return render_to_response("q_forecast.html", args)
         return redirect('/forecast')
     else:
