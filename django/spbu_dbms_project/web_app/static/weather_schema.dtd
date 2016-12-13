@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE weather
+[
+<!ELEMENT weather (item+)>
+<!ELEMENT item (Ch, P0, Tx, ff10, ff3, date, P, Cl, temperature_id, T, Tn, Tg, W2, sss, other_weather_data, RRR, Ff, W1, DD, E, VV, clouds_id, Td, E1, wind_id, pressure_id, U, H, tR, WW, city_id, N, Cm, Nh, Pa, weather_id)>
+<!ELEMENT Ch (#PCDATA)>
+<!ELEMENT P0 (#PCDATA)>
+<!ELEMENT Tx (#PCDATA)>
+<!ELEMENT ff10 (#PCDATA)>
+<!ELEMENT ff3 (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT P (#PCDATA)>
+<!ELEMENT Cl (#PCDATA)>
+<!ELEMENT temperature_id (#PCDATA)>
+<!ELEMENT T (#PCDATA)>
+<!ELEMENT Tn (#PCDATA)>
+<!ELEMENT Tg (#PCDATA)>
+<!ELEMENT W2 (#PCDATA)>
+<!ELEMENT sss (#PCDATA)>
+<!ELEMENT other_weather_data (#PCDATA)>
+<!ELEMENT RRR (#PCDATA)>
+<!ELEMENT Ff (#PCDATA)>
+<!ELEMENT W1 (#PCDATA)>
+<!ELEMENT DD (#PCDATA)>
+<!ELEMENT E (#PCDATA)>
+<!ELEMENT VV (#PCDATA)>
+<!ELEMENT clouds_id (#PCDATA)>
+<!ELEMENT Td (#PCDATA)>
+<!ELEMENT E1 (#PCDATA)>
+<!ELEMENT wind_id (#PCDATA)>
+<!ELEMENT pressure_id (#PCDATA)>
+<!ELEMENT U (#PCDATA)>
+<!ELEMENT H (#PCDATA)>
+<!ELEMENT tR (#PCDATA)>
+<!ELEMENT WW (#PCDATA)>
+<!ELEMENT city_id (#PCDATA)>
+<!ELEMENT N (#PCDATA)>
+<!ELEMENT Cm (#PCDATA)>
+<!ELEMENT Nh (#PCDATA)>
+<!ELEMENT Pa (#PCDATA)>
+<!ELEMENT weather_id (#PCDATA)>
+]>    

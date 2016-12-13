@@ -17,6 +17,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from dicttoxml import dicttoxml as xmlify
 from xml.dom.minidom import parseString
+import re
 # Create your views here.
 
 def index(request):
@@ -107,10 +108,11 @@ def historyQuery(request):
              a.update(d)
              a.update(e)
              a.update(f)
+            
             args['data'] = d_temperature
-
-            dom=parseString(xmlify(d_temperature, custom_root='weather',attr_type=False))
-            args['xml']=(dom.toprettyxml())
+            dom=parseString(xmlify(d_temperature, custom_root='weather',attr_type=False)).toprettyxml();
+            dom=re.sub('\n+', '', dom)
+            args['xml']= format_html(dom)
 
             return render_to_response("q_history.html", args)
         return redirect('/history')

@@ -8,6 +8,10 @@
 
 {% block hq_main %}
             <div id="hint" class="normal"></div>
+            <form method="get" action="{%static 'weather_schema.dtd'%}" style="none">    
+                <a class="btn btn-success" onclick="download_xml()">Скачать в XML</a>
+                <button class="btn btn-primary" type="submit">XML Schema</button>
+            </form>
             <table class="table table-bordered">
                 <tr class="header">
                     <td onmouseover="tooltip( this , 'Время в данном населённом пункте. Учитывается летнее/зимнее время' ,  'hint' )" onmouseout="hideInfo(this , 'hint')" colspan="1">Дата/Время</td>
@@ -44,9 +48,9 @@
 
                 {% for i in data %}
                 <tr>
-                            <td class="date"> {{i.date}} </td>
-                            <td> {{i.T}} </td>
-                            <td> {{i.P0}} </td>
+                    <td class="date"> {{i.date}} </td>
+                    <td> {{i.T}} </td>
+                    <td> {{i.P0}} </td>
                     <td> {{i.P}} </td>
                     <td> {{i.Pa}} </td>
                     <td> {{i.U}} </td>
@@ -87,11 +91,79 @@
         <script src="{% static 'js/hints.js'%}"></script>
         <script src="{% static 'js/ajax-form.js'%}"></script>
         <script src="{% static 'js/table-control.js'%}"></script>
+        <script>
+            
+            function download_xml(){
+                
+                var xml_data = '{{xml | safe}}';
+                xml_data = formatXml(xml_data);
+
+                var hiddenElement = document.createElement('a');
+
+                hiddenElement.href = 'data:attachment/text,' + encodeURI(xml_data);
+                hiddenElement.target = '_blank';
+                hiddenElement.download = 'weather_data.xml';
+                hiddenElement.click();
+            }
+            
+            function formatXml(xml) {
+                var reg = /(>)\s*(<)(\/*)/g; // updated Mar 30, 2015
+                var wsexp = / *(.*) +\n/g;
+                var contexp = /(<.+>)(.+\n)/g;
+                xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
+                var pad = 0;
+                var formatted = '';
+                var lines = xml.split('\n');
+                var indent = 0;
+                var lastType = 'other';
+                // 4 types of tags - single, closing, opening, other (text, doctype, comment) - 4*4 = 16 transitions 
+                var transitions = {
+                    'single->single': 0,
+                    'single->closing': -1,
+                    'single->opening': 0,
+                    'single->other': 0,
+                    'closing->single': 0,
+                    'closing->closing': -1,
+                    'closing->opening': 0,
+                    'closing->other': 0,
+                    'opening->single': 1,
+                    'opening->closing': 0,
+                    'opening->opening': 1,
+                    'opening->other': 1,
+                    'other->single': 0,
+                    'other->closing': -1,
+                    'other->opening': 0,
+                    'other->other': 0
+                };
+                    
+                for (var i = 0; i < lines.length; i++) {
+                var ln = lines[i];
+                var single = Boolean(ln.match(/<.+\/>/)); // is this line a single tag? ex. <br />
+                var closing = Boolean(ln.match(/<\/.+>/)); // is this a closing tag? ex. </a>
+                var opening = Boolean(ln.match(/<[^!].*>/)); // is this even a tag (that's not <!something>)
+                var type = single ? 'single' : closing ? 'closing' : opening ? 'opening' : 'other';
+                var fromTo = lastType + '->' + type;
+                lastType = type;
+                var padding = '';
+                    
+                indent += transitions[fromTo];
+                for (var j = 0; j < indent; j++) {
+                    padding += '\t';
+                }
+                if (fromTo == 'opening->closing')
+                    formatted = formatted.substr(0, formatted.length - 1) + ln + '\n'; // substr removes line break (\n) from prev loop
+                else    
+                    formatted += padding + ln + '\n';
+            }
+
+            return formatted;
+        };
+            
+        </script>
 {%  endblock %}
 
 {%block history_decor %}
              <li class="active"><a href="/history">История</a></li>
             <li><a href="/forecast">Прогноз</a></li>
             <li><a href="/about">О проекте</a></li>
-{{xml}}
             {% endblock %}

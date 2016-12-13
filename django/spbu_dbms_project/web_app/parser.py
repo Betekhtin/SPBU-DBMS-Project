@@ -37,7 +37,7 @@ def insert_temperature(conn,cursor,date, city_id, T, Tn, Tx, Td, Tg):
         conn.commit()
     except Error as e:
         print('Error:', e)
-        print(args)
+        
 def insert_weather(conn,cursor,date,city_id, WW, W1, W2):
 
     query = "INSERT INTO weather(date,city_id, WW, W1, W2) " \
@@ -51,7 +51,7 @@ def insert_weather(conn,cursor,date,city_id, WW, W1, W2):
         conn.commit()
     except Error as e:
         print('Error:', e)
-        print(args)
+        
 def insert_clouds(conn,cursor,date, city_id, N, Cl,Nh,H,Cm,Ch):
 
     query = "INSERT INTO clouds(date, city_id, N, Cl,Nh,H,Cm,Ch) " \
@@ -65,7 +65,7 @@ def insert_clouds(conn,cursor,date, city_id, N, Cl,Nh,H,Cm,Ch):
         conn.commit()
     except Error as e:
         print('Error:', e)
-        print(args)
+        
 def insert_pressure(conn, cursor, date, city_id, P0,P,Pa):
 
         query = "INSERT INTO pressure(date, city_id, P0,P,Pa) " \
@@ -79,7 +79,7 @@ def insert_pressure(conn, cursor, date, city_id, P0,P,Pa):
             conn.commit()
         except Error as e:
             print('Error:', e)
-            print(args)
+            
 def insert_wind(conn, cursor, date, city_id, DD,Ff,ff10,ff3):
     query = "INSERT INTO wind(date, city_id,DD,Ff,ff10,ff3) " \
             "VALUES(?,?,?,?,?,?)"
@@ -92,7 +92,7 @@ def insert_wind(conn, cursor, date, city_id, DD,Ff,ff10,ff3):
         conn.commit()
     except Error as e:
         print('Error:', e)
-        print(args)
+        
 def insert_other(conn, cursor, date, city_id, U,VV,RRR,tR,E,E_,sss):
     query = "INSERT INTO other_weather_data(date, city_id,U,VV,RRR,tR,E,E1,sss) " \
             "VALUES(?,?,?,?,?,?,?,?,?)"
@@ -105,7 +105,7 @@ def insert_other(conn, cursor, date, city_id, U,VV,RRR,tR,E,E_,sss):
         conn.commit()
     except Error as e:
         print('Error:', e)
-        print(args)
+        
 def insert_country(conn, cursor,country_id, country_name):
     query = "INSERT INTO country(country_id,country_name) " \
             "VALUES(?,?)"
@@ -203,7 +203,7 @@ def parser(source_date, source_page, city_id):
     except IndexError: Tg=''
     try: E1 = (tr_blocks[i].getchildren()[28].text_content())
     except IndexError: E1=''
-    try: sss = (tr_blocks[i].getchildren()[29].text_content())
+    try: sss = (tr_blocks[i].getchildren()[29][0].text_content())
     except IndexError: sss=''
     #print(date, T)
     #data = models.temperature(date=(date), city_id=1, T=float(T), Tn=float(Tn), Tx=float(Tx), Td=float(Td), Tg=float(Tg))
@@ -329,7 +329,7 @@ def parser(source_date, source_page, city_id):
         except IndexError:
             E1 = ''
         try:
-            sss = (tr_blocks[i].getchildren()[28].text_content())
+            sss = (tr_blocks[i].getchildren()[28][0].text_content())
         except IndexError:
             sss = ''
         #print(date, T)
